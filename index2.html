@@ -1,0 +1,224 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Владимир · Портфолио</title>
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; }
+    body {
+      font-family: system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif;
+      line-height: 1.6;
+      color: #e2e8f0;
+      min-height: 100vh;
+      background: linear-gradient(135deg, #020617 0%, #0b1120 30%, #020617 70%, #020617 100%);
+      background-attachment: fixed;
+      opacity: 0;
+      animation: bodyFade 0.7s ease-out forwards;
+    }
+    .container { max-width: 720px; margin: 0 auto; padding: 0 1.5rem; }
+    section { padding: 4rem 0; }
+
+    @keyframes bodyFade {
+      from { opacity: 0; }
+      to { opacity: 1; }
+    }
+
+    @keyframes fadeUp {
+      from { opacity: 0; transform: translateY(20px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+    @media (prefers-reduced-motion: reduce) {
+      @keyframes fadeUp { from, to { opacity: 1; transform: none; } }
+      @keyframes bodyFade { from, to { opacity: 1; } }
+      body { animation: none; opacity: 1; }
+    }
+    .animate-in {
+      opacity: 0;
+      animation: fadeUp 0.7s ease-out forwards;
+    }
+    .hero .tagline.animate-in { animation-delay: 0.1s; }
+    .hero h1.animate-in { animation-delay: 0.2s; }
+    .hero-desc.animate-in { animation-delay: 0.35s; }
+    .hero-photo.animate-in { animation-delay: 0.45s; }
+    .about .container > h2 { animation-delay: 0s; }
+    .about .container > p:nth-child(2) { animation-delay: 0.1s; }
+    .about .container > p:nth-child(3) { animation-delay: 0.2s; }
+    .about .container > p:nth-child(4) { animation-delay: 0.3s; }
+    .about .container > p:nth-child(5) { animation-delay: 0.4s; }
+    .contacts .container > h2 { animation-delay: 0s; }
+    .contacts .container > ul { animation-delay: 0.15s; }
+    footer .container { animation-delay: 0.1s; }
+
+    h1 { font-size: clamp(2rem, 5vw, 2.75rem); font-weight: 700; letter-spacing: -0.02em; }
+    h2 { font-size: 1.25rem; font-weight: 600; color: #22c55e; margin-bottom: 1rem; letter-spacing: 0.02em; }
+    p { color: #94a3b8; margin-bottom: 1rem; }
+    a {
+      color: #38bdf8;
+      text-decoration: none;
+      text-underline-offset: 3px;
+      transition:
+        color 0.2s ease,
+        box-shadow 0.2s ease,
+        transform 0.2s ease,
+        text-decoration-color 0.2s ease;
+    }
+    a:hover {
+      color: #f9a8d4;
+      text-decoration: underline;
+      text-decoration-color: rgba(249, 168, 212, 0.9);
+      transform: translateY(-1px);
+      box-shadow: 0 6px 18px rgba(15, 23, 42, 0.45);
+    }
+    .hero {
+      min-height: 85vh;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      padding: 3rem 0;
+    }
+    .hero-content {
+      display: grid;
+      grid-template-columns: minmax(0, 1fr) minmax(220px, 320px);
+      gap: 2rem;
+      align-items: center;
+    }
+    .hero-text { min-width: 0; }
+    .hero .tagline {
+      font-size: clamp(1rem, 2.5vw, 1.125rem);
+      color: #22c55e;
+      font-weight: 500;
+      margin-bottom: 0.5rem;
+    }
+    .hero h1 { margin-bottom: 0.75rem; }
+    .hero-desc {
+      font-size: 1.125rem;
+      color: #94a3b8;
+      max-width: 36ch;
+    }
+    .hero-photo {
+      width: 100%;
+      aspect-ratio: 3 / 4;
+      border-radius: 20px;
+      overflow: hidden;
+      border: 1px solid rgba(34, 197, 94, 0.45);
+      box-shadow: 0 20px 40px rgba(10, 10, 20, 0.45);
+    }
+    .hero-photo img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
+    }
+    .about p:last-child { margin-bottom: 0; }
+    .about .container > h2,
+    .about .container > p,
+    .contacts .container > h2,
+    .contacts .container > ul,
+    footer .container.animate-in { opacity: 0; animation: fadeUp 0.6s ease-out forwards; }
+
+    .contacts-list {
+      list-style: none;
+      display: flex;
+      flex-wrap: wrap;
+      gap: 1rem;
+    }
+    .contacts-list li a {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      padding: 0.5rem 1rem;
+      background: rgba(34, 197, 94, 0.08);
+      border-radius: 8px;
+      border: 1px solid rgba(34, 197, 94, 0.4);
+      color: #bbf7d0;
+      transition: background 0.2s ease, border-color 0.2s ease, transform 0.2s ease, box-shadow 0.2s ease;
+    }
+    .contacts-list li a:hover {
+      background: rgba(34, 197, 94, 0.16);
+      border-color: rgba(74, 222, 128, 0.9);
+      transform: translateY(-3px);
+      box-shadow: 0 8px 24px rgba(15, 23, 42, 0.55);
+    }
+    footer {
+      padding: 2rem 0;
+      text-align: center;
+      font-size: 0.875rem;
+      color: #64748b;
+    }
+    @media (max-width: 768px) {
+      section { padding: 3rem 0; }
+      .hero { min-height: 80vh; }
+      .hero-desc { font-size: 1rem; }
+      .hero-content { grid-template-columns: 1fr; gap: 1.25rem; }
+      .hero-photo { max-width: 260px; margin: 0 auto; }
+    }
+    @media (max-width: 420px) {
+      .container { padding: 0 1rem; }
+      section { padding: 2.5rem 0; }
+      .hero { min-height: auto; padding: 2.5rem 0; }
+      .contacts-list { gap: 0.75rem; }
+      .contacts-list li a { width: 100%; justify-content: center; }
+    }
+  </style>
+</head>
+<body>
+  <main>
+    <section class="hero">
+      <div class="container">
+        <div class="hero-content">
+          <div class="hero-text">
+            <p class="tagline animate-in">Человек мира · Инвестор · Путешественник</p>
+            <h1 class="animate-in">Владимир Корляков</h1>
+            <p class="hero-desc animate-in">
+              CEO производственного предприятия «МТР-Сервис». Соединяю стратегическое управление, инвестиции,
+              семью, медитации и путешествия, сохраняя фокус на развитии, балансе и долгосрочных результатах.
+            </p>
+          </div>
+          <figure class="hero-photo animate-in">
+            <img src="assets/photo.png" alt="Владимир Корляков">
+          </figure>
+        </div>
+      </div>
+    </section>
+
+    <section class="about">
+      <div class="container">
+        <h2>О себе</h2>
+        <p>
+          Я CEO компании «МТР-Сервис» и подхожу к бизнесу системно: через стратегию, людей и
+          устойчивый рост. Для меня важно не просто достигать целей, а создавать процессы,
+          которые работают в долгую и усиливают команду.
+        </p>
+        <p>
+          Я человек мира: много путешествую, изучаю разные подходы к жизни и бизнесу, и переношу
+          лучшие практики в свою работу. Как инвестор, я смотрю на решения через призму горизонта,
+          рисков и возможностей, уделяя внимание качеству активов и дисциплине.
+        </p>
+        <p>
+          Семья, медитации и внутренний баланс для меня так же важны, как и профессиональные
+          результаты. Я верю, что сильные решения рождаются там, где есть ясность, энергия
+          и гармония между делом, близкими и личным развитием.
+        </p>
+      </div>
+    </section>
+
+    <section class="contacts">
+      <div class="container">
+        <h2>Контакты</h2>
+        <ul class="contacts-list">
+          <li>
+            <a href="https://t.me/your_username" target="_blank" rel="noopener">
+              Telegram: @your_username
+            </a>
+          </li>
+        </ul>
+      </div>
+    </section>
+  </main>
+  <footer>
+    <div class="container animate-in">© 2026 · Портфолио</div>
+  </footer>
+</body>
+</html>

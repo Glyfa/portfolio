@@ -1,0 +1,28 @@
+# Secrets and env (never commit)
+.env
+.env.*
+!.env.example
+*.pem
+*.key
+*.crt
+*secret*
+*credentials*
+config.local.*
+*.local
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Editor / IDE
+.idea/
+.vscode/
+*.swp
+*.swo
+*~
+
+# Logs and temp
+*.log
+tmp/
+temp/
+.cache/
