@@ -1,28 +1,26 @@
 # Secrets and env (never commit)
 .env
 .env.*
+.env.local
+.env.development
+.env.production
+*.env
 !.env.example
-*.pem
-*.key
-*.crt
-*secret*
-*credentials*
-config.local.*
-*.local
 
-# OS
+# Local / alternate versions (optional)
+index2.html
+portrait.jpg
+
+# OS and editor
 .DS_Store
 Thumbs.db
-
-# Editor / IDE
-.idea/
-.vscode/
 *.swp
 *.swo
-*~
-
-# Logs and temp
+.idea/
+.vscode/
 *.log
-tmp/
-temp/
-.cache/
+
+# Optional: uncomment if you add build tools later
+# node_modules/
+# dist/
+# .cache/
