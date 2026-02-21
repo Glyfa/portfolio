@@ -169,11 +169,10 @@
       <div class="container">
         <div class="hero-content">
           <div class="hero-text">
-            <p class="tagline animate-in">Человек мира · Инвестор · Путешественник</p>
+            <p class="tagline animate-in">Трансэнергетическое дыхание · Медитации Ошо · Дыхание Жизни</p>
             <h1 class="animate-in">Атмо Вирья</h1>
             <p class="hero-desc animate-in">
-              CEO производственного предприятия «МТР-Сервис». Соединяю стратегическое управление, инвестиции,
-              семью, медитации и путешествия, сохраняя фокус на развитии, балансе и долгосрочных результатах.
+              Мастер трансэнергетического дыхания и медитаций Ошо с опытом более 20 лет. Ведущий практик «Дыхание Жизни». Помогаю раскрывать потенциал через дыхательные и медитативные практики.
             </p>
           </div>
           <figure class="hero-photo animate-in">
@@ -187,19 +186,13 @@
       <div class="container">
         <h2>О себе</h2>
         <p>
-          Я CEO компании «МТР-Сервис» и подхожу к бизнесу системно: через стратегию, людей и
-          устойчивый рост. Для меня важно не просто достигать целей, а создавать процессы,
-          которые работают в долгую и усиливают команду.
+          Я мастер в сфере трансэнергетического дыхания и медитаций Ошо с опытом более 20 лет. Веду практики «Дыхание Жизни»: семинары по холотропному и трансэнергетическому дыханию, активные медитации Ошо, ребефинг, ретриты.
         </p>
         <p>
-          Я человек мира: много путешествую, изучаю разные подходы к жизни и бизнесу, и переношу
-          лучшие практики в свою работу. Как инвестор, я смотрю на решения через призму горизонта,
-          рисков и возможностей, уделяя внимание качеству активов и дисциплине.
+          Для меня важно не просто проводить сессии, а создавать безопасное пространство, в котором человек может освободиться от блоков, пережить целостность и найти опору в себе. Работаю с группами и индивидуально, вживую и онлайн.
         </p>
         <p>
-          Семья, медитации и внутренний баланс для меня так же важны, как и профессиональные
-          результаты. Я верю, что сильные решения рождаются там, где есть ясность, энергия
-          и гармония между делом, близкими и личным развитием.
+          Внутренний баланс, осознанность и практика «здесь и сейчас» — то, чему я учу и чем живу. Если хотите узнать об услугах, ценах или записаться — напишите в мессенджер или откройте чат «Личный помощник» на этом сайте.
         </p>
       </div>
     </section>
@@ -230,5 +223,113 @@
   <footer>
     <div class="container animate-in">© 2026 · Портфолио</div>
   </footer>
+
+  <!-- Личный помощник — чат-бот -->
+  <script>
+    window.aiChatConfig = {
+      consultantName: "Личный помощник",
+      chatTitle: "Личный помощник",
+      welcomeMessage: "Здравствуйте! Я помощник Атмо Вирья. Могу рассказать об услугах (трансэнергетическое дыхание, медитации Ошо), ценах и как связаться с мастером. О чём хотите спросить?",
+      apiUrl: "/api/chat",
+      primaryColor: "#22c55e"
+    };
+  </script>
+  <style>
+    #ai-chat-widget { position: fixed; bottom: 20px; right: 20px; z-index: 999999; font-family: system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif; }
+    #ai-chat-toggle { width: 60px; height: 60px; border-radius: 50%; background: var(--primary-color, #22c55e); border: none; cursor: pointer; box-shadow: 0 4px 20px rgba(0,0,0,0.25); display: flex; align-items: center; justify-content: center; transition: transform 0.2s; }
+    #ai-chat-toggle:hover { transform: scale(1.05); }
+    #ai-chat-toggle svg { width: 28px; height: 28px; fill: white; }
+    #ai-chat-window { position: absolute; bottom: 80px; right: 0; width: 380px; max-width: calc(100vw - 40px); height: 500px; background: #0f172a; border: 1px solid rgba(34, 197, 94, 0.4); border-radius: 16px; box-shadow: 0 8px 40px rgba(0,0,0,0.4); display: none; flex-direction: column; overflow: hidden; }
+    #ai-chat-window.open { display: flex; }
+    .ai-chat-header { background: var(--primary-color, #22c55e); color: #fff; padding: 16px; font-weight: 600; display: flex; justify-content: space-between; align-items: center; }
+    .ai-chat-close { background: none; border: none; color: white; cursor: pointer; font-size: 20px; }
+    .ai-chat-messages { flex: 1; overflow-y: auto; padding: 16px; display: flex; flex-direction: column; gap: 12px; }
+    .ai-message { max-width: 85%; padding: 12px 16px; border-radius: 16px; font-size: 14px; line-height: 1.5; }
+    .ai-message.user { background: rgba(34, 197, 94, 0.5); color: #e2e8f0; align-self: flex-end; border-bottom-right-radius: 4px; }
+    .ai-message.assistant { background: #1e293b; color: #e2e8f0; align-self: flex-start; border-bottom-left-radius: 4px; }
+    .ai-message.error { background: #7f1d1d; color: #fecaca; font-size: 12px; }
+    .ai-chat-input { padding: 16px; border-top: 1px solid #334155; display: flex; gap: 8px; }
+    .ai-chat-input input { flex: 1; padding: 12px 16px; background: #1e293b; border: 1px solid #475569; border-radius: 24px; color: #e2e8f0; outline: none; font-size: 14px; }
+    .ai-chat-input input:focus { border-color: #22c55e; }
+    .ai-chat-input button { width: 44px; height: 44px; border-radius: 50%; background: var(--primary-color, #22c55e); border: none; cursor: pointer; display: flex; align-items: center; justify-content: center; }
+    .ai-chat-input button:disabled { background: #475569; cursor: not-allowed; }
+    .ai-chat-input button svg { width: 20px; height: 20px; fill: white; }
+    .ai-typing { display: flex; gap: 4px; padding: 12px 16px; background: #1e293b; border-radius: 16px; border-bottom-left-radius: 4px; width: fit-content; }
+    .ai-typing span { width: 8px; height: 8px; background: #64748b; border-radius: 50%; animation: ai-typing 1.4s infinite; }
+    .ai-typing span:nth-child(2) { animation-delay: 0.2s; }
+    .ai-typing span:nth-child(3) { animation-delay: 0.4s; }
+    @keyframes ai-typing { 0%, 60%, 100% { transform: translateY(0); } 30% { transform: translateY(-6px); } }
+  </style>
+  <div id="ai-chat-widget">
+    <button id="ai-chat-toggle" type="button" aria-label="Открыть чат" onclick="toggleChat()">
+      <svg viewBox="0 0 24 24"><path d="M20 2H4c-1.1 0-2 .9-2 2v18l4-4h14c1.1 0 2-.9 2-2V4c0-1.1-.9-2-2-2zm0 14H5.17L4 17.17V4h16v12z"/></svg>
+    </button>
+    <div id="ai-chat-window">
+      <div class="ai-chat-header">
+        <span id="chat-title">Личный помощник</span>
+        <button type="button" class="ai-chat-close" aria-label="Закрыть" onclick="closeChat()">×</button>
+      </div>
+      <div class="ai-chat-messages" id="chat-messages"></div>
+      <div class="ai-chat-input">
+        <input type="text" id="user-message" placeholder="Напишите сообщение..." onkeypress="if(event.key==='Enter')sendMessage()">
+        <button type="button" id="send-btn" onclick="sendMessage()" aria-label="Отправить">
+          <svg viewBox="0 0 24 24"><path d="M2.01 21L23 12 2.01 3 2 10l15 2-15 2z"/></svg>
+        </button>
+      </div>
+    </div>
+  </div>
+  <script>
+    (function() {
+      var config = window.aiChatConfig || {};
+      window.toggleChat = function() {
+        var win = document.getElementById('ai-chat-window');
+        win.classList.toggle('open');
+        if (win.classList.contains('open') && document.getElementById('chat-messages').children.length === 0) {
+          addMessage(config.welcomeMessage || 'Здравствуйте! Чем могу помочь?', 'assistant');
+        }
+      };
+      window.closeChat = function() { document.getElementById('ai-chat-window').classList.remove('open'); };
+      window.sendMessage = async function() {
+        var input = document.getElementById('user-message');
+        var msg = input.value.trim();
+        var btn = document.getElementById('send-btn');
+        if (!msg) return;
+        addMessage(msg, 'user');
+        input.value = '';
+        btn.disabled = true;
+        var typingId = addTyping();
+        try {
+          var r = await fetch(config.apiUrl || '/api/chat', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ message: msg }) });
+          removeTyping(typingId);
+          if (!r.ok) { var e = await r.json(); throw new Error(e.error || 'Ошибка'); }
+          var data = await r.json();
+          addMessage(data.response, 'assistant');
+        } catch (err) {
+          removeTyping(typingId);
+          addMessage('Извините, ошибка: ' + err.message + '. Напишите мастеру в WhatsApp или Telegram — контакты ниже.', 'error');
+        }
+        btn.disabled = false;
+      };
+      function addMessage(text, role) {
+        var c = document.getElementById('chat-messages');
+        var d = document.createElement('div');
+        d.className = 'ai-message ' + role;
+        d.textContent = text;
+        c.appendChild(d);
+        c.scrollTop = c.scrollHeight;
+      }
+      function addTyping() {
+        var c = document.getElementById('chat-messages');
+        var d = document.createElement('div');
+        d.className = 'ai-typing';
+        d.innerHTML = '<span></span><span></span><span></span>';
+        d.id = 'typing-' + Date.now();
+        c.appendChild(d);
+        c.scrollTop = c.scrollHeight;
+        return d.id;
+      }
+      function removeTyping(id) { var el = document.getElementById(id); if (el) el.remove(); }
+    })();
+  </script>
 </body>
 </html>
