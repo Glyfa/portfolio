@@ -6,13 +6,14 @@
 
 На сайте работает AI-чат (на базе [cursor-ai-chatbot](https://github.com/evgyur/cursor-ai-chatbot)), который отвечает на вопросы об услугах, ценах и контактах.
 
-### Включение чата на Vercel
+### Включение чата на Vercel (Groq — бесплатно)
 
-1. Зайди в [Vercel → твой проект portfolio → Settings → Environment Variables](https://vercel.com/glyfas-projects/portfolio/settings/environment-variables).
-2. Добавь переменную **`MINIMAX_API_KEY`** — ключ с [platform.minimax.io](https://platform.minimax.io) (раздел API Keys).
-3. Сохрани и сделай **Redeploy** проекта (Deployments → … → Redeploy).
+1. Получи ключ: зайди на [console.groq.com](https://console.groq.com), зарегистрируйся (без карты), создай API Key в разделе API Keys.
+2. В [Vercel → проект portfolio → Settings → Environment Variables](https://vercel.com/glyfas-projects/portfolio/settings/environment-variables) добавь переменную **`GROQ_API_KEY`** со значением ключа.
+3. Удали старую переменную **`MINIMAX_API_KEY`**, если была (чат теперь использует только Groq).
+4. Сохрани и сделай **Redeploy** проекта (Deployments → … → Redeploy).
 
-После этого кнопка чата в правом нижнем углу будет отправлять сообщения в API и показывать ответы.
+После этого кнопка чата будет отправлять запросы в Groq и показывать ответы. Тариф Groq бесплатный, лимиты по запросам в минуту/день — см. console.groq.com.
 
 ### Локальная проверка API
 

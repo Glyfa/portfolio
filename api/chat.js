@@ -1,7 +1,7 @@
 /**
- * Личный помощник — AI-чат на MiniMax API
- * Скилл: cursor-ai-chatbot (evgyur/cursor-ai-chatbot)
- * Переменная окружения Vercel: MINIMAX_API_KEY
+ * Личный помощник — AI-чат на Groq API (бесплатный тариф)
+ * Ключ: console.groq.com → API Keys
+ * Переменная окружения Vercel: GROQ_API_KEY
  */
 
 const path = require('path');
@@ -18,7 +18,8 @@ function getKnowledge() {
   }
 }
 
-const SYSTEM_PROMPT = `Ты — Личный помощник мастера Атмо Вирья. Отвечай кратко и по делу на русском.
+function getSystemPrompt() {
+  return `Ты — Личный помощник мастера Атмо Вирья. Отвечай кратко и по делу на русском.
 
 ПРАВИЛА:
 1. Отвечай ТОЛЬКО на основе информации ниже.
@@ -28,23 +29,23 @@ const SYSTEM_PROMPT = `Ты — Личный помощник мастера А�
 
 Данные:
 ${getKnowledge()}`;
+}
 
-async function callMiniMax(apiKey, userMessage) {
-  const res = await fetch('https://api.minimax.io/v1/text/chatcompletion_v2', {
+async function callGroq(apiKey, userMessage) {
+  const res = await fetch('https://api.groq.com/openai/v1/chat/completions', {
     method: 'POST',
     headers: {
       'Authorization': `Bearer ${apiKey}`,
       'Content-Type': 'application/json',
     },
     body: JSON.stringify({
-      model: 'M2-her',
+      model: 'llama-3.1-8b-instant',
       messages: [
-        { role: 'system', name: 'Личный помощник', content: SYSTEM_PROMPT },
-        { role: 'user', name: 'User', content: userMessage },
+        { role: 'system', content: getSystemPrompt() },
+        { role: 'user', content: userMessage },
       ],
-      temperature: 0.7,
-      top_p: 0.95,
       max_completion_tokens: 1024,
+      temperature: 0.7,
     }),
   });
 
@@ -53,17 +54,14 @@ async function callMiniMax(apiKey, userMessage) {
   try {
     data = JSON.parse(text);
   } catch (e) {
-    throw new Error(`API вернул не JSON (${res.status}): проверьте ключ на platform.minimax.io`);
+    throw new Error(`API вернул не JSON (${res.status}). Проверьте ключ на console.groq.com`);
   }
 
   if (!res.ok) {
-    const msg = data.base_resp?.status_msg || data.error?.message || text.slice(0, 200);
-    throw new Error(`MiniMax ${res.status}: ${msg}`);
+    const msg = data.error?.message || data.message || text.slice(0, 200);
+    throw new Error(msg || `Groq ${res.status}`);
   }
-  if (data.base_resp && data.base_resp.status_code !== 0) {
-    const msg = data.base_resp.status_msg || `Код ${data.base_resp.status_code}`;
-    throw new Error(msg);
-  }
+
   const content = data.choices?.[0]?.message?.content;
   return content || 'Извините, не удалось получить ответ. Напишите мастеру напрямую — контакты на сайте.';
 }
@@ -81,7 +79,7 @@ module.exports = async function handler(req, res) {
     return res.status(405).json({ error: 'Только POST' });
   }
 
-  const apiKey = process.env.MINIMAX_API_KEY;
+  const apiKey = process.env.GROQ_API_KEY;
   if (!apiKey) {
     return res.status(500).json({ error: 'Сервис не настроен. Обратитесь к мастеру по контактам на сайте.' });
   }
@@ -92,10 +90,10 @@ module.exports = async function handler(req, res) {
   }
 
   try {
-    const response = await callMiniMax(apiKey, message.trim());
+    const response = await callGroq(apiKey, message.trim());
     res.status(200).json({ response });
   } catch (err) {
-    console.error('MiniMax error:', err.message);
+    console.error('Groq error:', err.message);
     res.status(500).json({ error: err.message || 'Временная ошибка. Напишите мастеру в WhatsApp или Telegram — контакты на сайте.' });
   }
 };
