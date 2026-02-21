@@ -39,17 +39,30 @@ async function callMiniMax(apiKey, userMessage) {
     body: JSON.stringify({
       model: 'M2-her',
       messages: [
-        { role: 'system', content: SYSTEM_PROMPT },
-        { role: 'user', content: userMessage },
+        { role: 'system', name: 'Личный помощник', content: SYSTEM_PROMPT },
+        { role: 'user', name: 'User', content: userMessage },
       ],
-      max_completion_tokens: 1024,
       temperature: 0.7,
+      top_p: 0.95,
+      max_completion_tokens: 1024,
     }),
   });
 
-  const data = await res.json();
+  const text = await res.text();
+  let data;
+  try {
+    data = JSON.parse(text);
+  } catch (e) {
+    throw new Error(`API вернул не JSON (${res.status}): проверьте ключ на platform.minimax.io`);
+  }
+
+  if (!res.ok) {
+    const msg = data.base_resp?.status_msg || data.error?.message || text.slice(0, 200);
+    throw new Error(`MiniMax ${res.status}: ${msg}`);
+  }
   if (data.base_resp && data.base_resp.status_code !== 0) {
-    throw new Error(data.base_resp.status_msg || `API error ${data.base_resp.status_code}`);
+    const msg = data.base_resp.status_msg || `Код ${data.base_resp.status_code}`;
+    throw new Error(msg);
   }
   const content = data.choices?.[0]?.message?.content;
   return content || 'Извините, не удалось получить ответ. Напишите мастеру напрямую — контакты на сайте.';
@@ -83,6 +96,6 @@ module.exports = async function handler(req, res) {
     res.status(200).json({ response });
   } catch (err) {
     console.error('MiniMax error:', err.message);
-    res.status(500).json({ error: 'Временная ошибка. Напишите мастеру в WhatsApp или Telegram — контакты на сайте.' });
+    res.status(500).json({ error: err.message || 'Временная ошибка. Напишите мастеру в WhatsApp или Telegram — контакты на сайте.' });
   }
 };
