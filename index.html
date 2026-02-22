@@ -257,6 +257,8 @@
     .ai-chat-input button { width: 44px; height: 44px; border-radius: 50%; background: var(--primary-color, #22c55e); border: none; cursor: pointer; display: flex; align-items: center; justify-content: center; }
     .ai-chat-input button:disabled { background: #475569; cursor: not-allowed; }
     .ai-chat-input button svg { width: 20px; height: 20px; fill: white; }
+    .ai-chat-input button.voice-btn.listening { background: #dc2626; animation: pulse-mic 1s infinite; }
+    @keyframes pulse-mic { 50% { opacity: 0.85; transform: scale(1.05); } }
     .ai-typing { display: flex; gap: 4px; padding: 12px 16px; background: #1e293b; border-radius: 16px; border-bottom-left-radius: 4px; width: fit-content; }
     .ai-typing span { width: 8px; height: 8px; background: #64748b; border-radius: 50%; animation: ai-typing 1.4s infinite; }
     .ai-typing span:nth-child(2) { animation-delay: 0.2s; }
@@ -274,7 +276,8 @@
       </div>
       <div class="ai-chat-messages" id="chat-messages"></div>
       <div class="ai-chat-input">
-        <input type="text" id="user-message" placeholder="Напишите сообщение..." onkeypress="if(event.key==='Enter')sendMessage()">
+        <input type="text" id="user-message" placeholder="Напишите или нажмите микрофон..." onkeypress="if(event.key==='Enter')sendMessage()">
+        <button type="button" id="voice-btn" class="voice-btn" aria-label="Голосовой ввод" title="Голосовой ввод (русский)"> <svg viewBox="0 0 24 24"><path d="M12 14c1.66 0 3-1.34 3-3V5c0-1.66-1.34-3-3-3S9 3.34 9 5v6c0 1.66 1.34 3 3 3zm5-3c0 2.76-2.24 5-5 5s-5-2.24-5-5H5c0 3.53 2.61 6.43 6 6.92V21h2v-3.08c3.39-.49 6-3.39 6-6.92h-2z"/></svg> </button>
         <button type="button" id="send-btn" onclick="sendMessage()" aria-label="Отправить">
           <svg viewBox="0 0 24 24"><path d="M2.01 21L23 12 2.01 3 2 10l15 2-15 2z"/></svg>
         </button>
@@ -332,6 +335,43 @@
         return d.id;
       }
       function removeTyping(id) { var el = document.getElementById(id); if (el) el.remove(); }
+
+      var SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
+      var recognition = null;
+      if (SpeechRecognition) {
+        recognition = new SpeechRecognition();
+        recognition.lang = 'ru-RU';
+        recognition.continuous = false;
+        recognition.interimResults = true;
+        recognition.onresult = function(e) {
+          var last = e.results.length - 1;
+          var text = e.results[last][0].transcript;
+          if (e.results[last].isFinal) {
+            var input = document.getElementById('user-message');
+            input.value = (input.value ? input.value + ' ' : '') + text;
+          }
+        };
+        recognition.onerror = function(e) {
+          document.getElementById('voice-btn').classList.remove('listening');
+          if (e.error !== 'aborted') addMessage('Голос не распознан. Попробуйте ещё раз или напишите.', 'error');
+        };
+        recognition.onend = function() { document.getElementById('voice-btn').classList.remove('listening'); };
+      }
+      window.toggleVoice = function() {
+        if (!recognition) { addMessage('Голосовой ввод не поддерживается в этом браузере (нужен Chrome, Edge или Safari).', 'error'); return; }
+        var btn = document.getElementById('voice-btn');
+        if (btn.classList.contains('listening')) {
+          recognition.stop();
+          return;
+        }
+        btn.classList.add('listening');
+        recognition.start();
+      };
+      var voiceBtn = document.getElementById('voice-btn');
+      if (voiceBtn) {
+        voiceBtn.onclick = toggleVoice;
+        if (!recognition) voiceBtn.style.display = 'none';
+      }
     })();
   </script>
 </body>
