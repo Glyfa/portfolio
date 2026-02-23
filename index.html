@@ -6,24 +6,26 @@
   <title>Атмо Вирья · Портфолио</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Lato:wght@400;500;600;700&family=Playfair+Display:ital,wght@0,400;0,500;0,600;0,700;1,400&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,400;0,9..40,500;0,9..40,600;0,9..40,700;1,9..40,400&family=Outfit:wght@400;500;600;700&display=swap" rel="stylesheet">
   <style>
     :root {
-      --luxe-cream: #faf8f5;
-      --luxe-charcoal: #2c2c2c;
-      --luxe-muted: #6b6359;
-      --luxe-gold: #b8860b;
-      --luxe-gold-soft: rgba(184, 134, 11, 0.15);
-      --luxe-border: #e8e4df;
+      --glass-bg: linear-gradient(135deg, #fef7ed 0%, #faf5ff 40%, #f0f9ff 100%);
+      --glass-charcoal: #1e293b;
+      --glass-muted: #64748b;
+      --glass-accent: #7c3aed;
+      --glass-accent-soft: rgba(124, 58, 237, 0.12);
+      --glass-panel: rgba(255, 255, 255, 0.7);
+      --glass-border: rgba(255, 255, 255, 0.9);
     }
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
     html { scroll-behavior: smooth; }
     body {
-      font-family: 'Lato', system-ui, sans-serif;
+      font-family: 'DM Sans', system-ui, sans-serif;
       line-height: 1.6;
-      color: var(--luxe-charcoal);
+      color: var(--glass-charcoal);
       min-height: 100vh;
-      background: var(--luxe-cream);
+      background: var(--glass-bg);
+      background-attachment: fixed;
       opacity: 0;
       animation: bodyFade 0.7s ease-out forwards;
     }
@@ -48,15 +50,16 @@
       animation: fadeUp 0.8s ease-out forwards;
     }
 
-    /* ----- Navbar (Luxe / Origin UI style) ----- */
+    /* ----- Navbar (Glassmorphism / Prism UI style) ----- */
     .nav {
       position: sticky;
       top: 0;
       z-index: 1000;
-      background: rgba(250, 248, 245, 0.92);
-      backdrop-filter: blur(12px);
-      -webkit-backdrop-filter: blur(12px);
-      border-bottom: 1px solid var(--luxe-border);
+      background: rgba(255, 255, 255, 0.6);
+      backdrop-filter: blur(20px) saturate(180%);
+      -webkit-backdrop-filter: blur(20px) saturate(180%);
+      border-bottom: 1px solid rgba(255, 255, 255, 0.8);
+      box-shadow: 0 1px 0 rgba(0, 0, 0, 0.04);
     }
     .nav .container {
       display: flex;
@@ -66,14 +69,15 @@
       padding-bottom: 1.25rem;
     }
     .nav-brand {
-      font-family: 'Playfair Display', serif;
-      font-size: 1.35rem;
+      font-family: 'Outfit', sans-serif;
+      font-size: 1.4rem;
       font-weight: 600;
-      color: var(--luxe-charcoal);
+      color: var(--glass-charcoal);
       text-decoration: none;
-      letter-spacing: 0.02em;
+      letter-spacing: -0.02em;
+      transition: color 0.2s ease;
     }
-    .nav-brand:hover { color: var(--luxe-gold); }
+    .nav-brand:hover { color: var(--glass-accent); }
     .nav-links {
       display: flex;
       align-items: center;
@@ -83,28 +87,29 @@
     .nav-links a {
       font-size: 0.95rem;
       font-weight: 500;
-      color: var(--luxe-muted);
+      color: var(--glass-muted);
       text-decoration: none;
       transition: color 0.2s ease;
     }
-    .nav-links a:hover { color: var(--luxe-charcoal); }
+    .nav-links a:hover { color: var(--glass-charcoal); }
     .nav-cta {
       display: inline-flex;
       align-items: center;
-      padding: 0.6rem 1.25rem;
+      padding: 0.65rem 1.35rem;
       font-size: 0.9rem;
       font-weight: 600;
-      color: var(--luxe-cream);
-      background: var(--luxe-charcoal);
+      color: #fff;
+      background: linear-gradient(135deg, #7c3aed 0%, #6366f1 100%);
       border: none;
-      border-radius: 6px;
+      border-radius: 12px;
       text-decoration: none;
       cursor: pointer;
-      transition: background 0.2s ease, transform 0.2s ease;
+      box-shadow: 0 4px 14px rgba(124, 58, 237, 0.4);
+      transition: transform 0.2s ease, box-shadow 0.2s ease;
     }
     .nav-cta:hover {
-      background: var(--luxe-gold);
-      transform: translateY(-1px);
+      transform: translateY(-2px);
+      box-shadow: 0 6px 20px rgba(124, 58, 237, 0.45);
     }
     @media (max-width: 768px) {
       .nav .container { flex-wrap: wrap; gap: 1rem; }
@@ -112,9 +117,9 @@
       .nav-cta { order: 2; }
     }
 
-    /* ----- Hero (Luxury: serif headline, generous space) ----- */
+    /* ----- Hero (Glassmorphism: frosted panels, gradient depth) ----- */
     .hero {
-      min-height: 88vh;
+      min-height: 90vh;
       display: flex;
       flex-direction: column;
       justify-content: center;
@@ -127,42 +132,53 @@
       gap: 4rem;
       align-items: center;
     }
-    .hero-text { min-width: 0; }
+    .hero-text {
+      min-width: 0;
+      padding: 2.5rem 2.75rem;
+      background: var(--glass-panel);
+      backdrop-filter: blur(20px);
+      -webkit-backdrop-filter: blur(20px);
+      border-radius: 20px;
+      border: 1px solid var(--glass-border);
+      box-shadow: 0 8px 32px rgba(0, 0, 0, 0.06);
+    }
     .hero .tagline {
-      font-family: 'Lato', sans-serif;
-      font-size: 0.8rem;
+      font-family: 'Outfit', sans-serif;
+      font-size: 0.75rem;
       font-weight: 600;
-      letter-spacing: 0.2em;
+      letter-spacing: 0.18em;
       text-transform: uppercase;
-      color: var(--luxe-gold);
+      color: var(--glass-accent);
       margin-bottom: 1rem;
     }
     .hero .tagline.animate-in { animation-delay: 0.1s; }
     .hero h1 {
-      font-family: 'Playfair Display', serif;
+      font-family: 'Outfit', sans-serif;
       font-size: clamp(2.75rem, 6vw, 4rem);
-      font-weight: 500;
-      letter-spacing: -0.02em;
-      line-height: 1.12;
-      color: var(--luxe-charcoal);
-      margin-bottom: 1.5rem;
+      font-weight: 600;
+      letter-spacing: -0.03em;
+      line-height: 1.1;
+      color: var(--glass-charcoal);
+      margin-bottom: 1.25rem;
     }
     .hero h1.animate-in { animation-delay: 0.2s; }
     .hero-desc {
-      font-size: 1.125rem;
+      font-size: 1.1rem;
       line-height: 1.7;
-      color: var(--luxe-muted);
-      max-width: 40ch;
+      color: var(--glass-muted);
+      max-width: 42ch;
     }
     .hero-desc.animate-in { animation-delay: 0.35s; }
     .hero-photo {
       width: 100%;
       max-width: 380px;
       aspect-ratio: 3 / 4;
-      border-radius: 4px;
+      border-radius: 20px;
       overflow: hidden;
-      border: 1px solid var(--luxe-border);
-      box-shadow: 0 24px 48px rgba(44, 44, 44, 0.08);
+      background: var(--glass-panel);
+      backdrop-filter: blur(20px);
+      border: 1px solid var(--glass-border);
+      box-shadow: 0 24px 48px rgba(0, 0, 0, 0.08), 0 0 0 1px rgba(255,255,255,0.5) inset;
     }
     .hero-photo.animate-in { animation-delay: 0.45s; }
     .hero-photo img {
@@ -174,21 +190,21 @@
 
     /* ----- Rest of page (consistent palette) ----- */
     h2 {
-      font-family: 'Playfair Display', serif;
+      font-family: 'Outfit', sans-serif;
       font-size: 1.5rem;
       font-weight: 600;
-      color: var(--luxe-charcoal);
+      color: var(--glass-charcoal);
       margin-bottom: 1rem;
-      letter-spacing: 0.02em;
+      letter-spacing: -0.02em;
     }
-    .about p, .contacts p { color: var(--luxe-muted); margin-bottom: 1rem; }
+    .about p, .contacts p { color: var(--glass-muted); margin-bottom: 1rem; }
     a {
-      color: var(--luxe-gold);
+      color: var(--glass-accent);
       text-decoration: none;
       text-underline-offset: 3px;
       transition: color 0.2s ease, text-decoration-color 0.2s ease;
     }
-    a:hover { color: var(--luxe-charcoal); text-decoration: underline; }
+    a:hover { color: var(--glass-charcoal); text-decoration: underline; }
     .about .container > h2 { animation-delay: 0s; }
     .about .container > p:nth-child(2) { animation-delay: 0.1s; }
     .about .container > p:nth-child(3) { animation-delay: 0.2s; }
@@ -215,24 +231,24 @@
       align-items: center;
       gap: 0.5rem;
       padding: 0.65rem 1.25rem;
-      background: var(--luxe-gold-soft);
-      border-radius: 6px;
-      border: 1px solid var(--luxe-border);
-      color: var(--luxe-charcoal);
+      background: var(--glass-accent-soft);
+      border-radius: 12px;
+      border: 1px solid rgba(124, 58, 237, 0.2);
+      color: var(--glass-charcoal);
       font-weight: 500;
-      transition: background 0.2s ease, border-color 0.2s ease, color 0.2s ease;
+      transition: background 0.2s ease, border-color 0.2s ease, box-shadow 0.2s ease;
     }
     .contacts-list li a:hover {
-      background: rgba(184, 134, 11, 0.2);
-      border-color: var(--luxe-gold);
-      color: var(--luxe-charcoal);
+      background: rgba(124, 58, 237, 0.18);
+      border-color: var(--glass-accent);
+      box-shadow: 0 4px 12px rgba(124, 58, 237, 0.15);
     }
     footer {
       padding: 2.5rem 0;
       text-align: center;
       font-size: 0.875rem;
-      color: var(--luxe-muted);
-      border-top: 1px solid var(--luxe-border);
+      color: var(--glass-muted);
+      border-top: 1px solid rgba(255, 255, 255, 0.8);
     }
     @media (max-width: 768px) {
       section { padding: 3rem 0; }
@@ -332,7 +348,7 @@
       chatTitle: "Личный помощник",
       welcomeMessage: "Здравствуйте! Я помощник Атмо Вирья. Могу рассказать об услугах (дыхание, медитации Ошо, интенсивы 5/10 дней, Праймал, мужские группы), ценах и как связаться с мастером. О чём хотите спросить?",
       apiUrl: "/api/chat",
-      primaryColor: "#b8860b"
+      primaryColor: "#7c3aed"
     };
   </script>
   <style>
@@ -340,18 +356,18 @@
     #ai-chat-toggle { width: 60px; height: 60px; border-radius: 50%; background: var(--primary-color, #22c55e); border: none; cursor: pointer; box-shadow: 0 4px 20px rgba(0,0,0,0.25); display: flex; align-items: center; justify-content: center; transition: transform 0.2s; }
     #ai-chat-toggle:hover { transform: scale(1.05); }
     #ai-chat-toggle svg { width: 28px; height: 28px; fill: white; }
-    #ai-chat-window { position: absolute; bottom: 80px; right: 0; width: 380px; max-width: calc(100vw - 40px); height: 500px; background: #2c2c2c; border: 1px solid rgba(184, 134, 11, 0.4); border-radius: 16px; box-shadow: 0 8px 40px rgba(0,0,0,0.25); display: none; flex-direction: column; overflow: hidden; }
+    #ai-chat-window { position: absolute; bottom: 80px; right: 0; width: 380px; max-width: calc(100vw - 40px); height: 500px; background: rgba(30, 41, 59, 0.95); backdrop-filter: blur(20px); border: 1px solid rgba(124, 58, 237, 0.3); border-radius: 20px; box-shadow: 0 8px 40px rgba(0,0,0,0.2); display: none; flex-direction: column; overflow: hidden; }
     #ai-chat-window.open { display: flex; }
     .ai-chat-header { background: var(--primary-color, #22c55e); color: #fff; padding: 16px; font-weight: 600; display: flex; justify-content: space-between; align-items: center; }
     .ai-chat-close { background: none; border: none; color: white; cursor: pointer; font-size: 20px; }
     .ai-chat-messages { flex: 1; overflow-y: auto; padding: 16px; display: flex; flex-direction: column; gap: 12px; }
     .ai-message { max-width: 85%; padding: 12px 16px; border-radius: 16px; font-size: 14px; line-height: 1.5; white-space: pre-line; }
-    .ai-message.user { background: rgba(184, 134, 11, 0.35); color: #faf8f5; align-self: flex-end; border-bottom-right-radius: 4px; }
+    .ai-message.user { background: rgba(124, 58, 237, 0.4); color: #faf8f5; align-self: flex-end; border-bottom-right-radius: 4px; }
     .ai-message.assistant { background: #3d3d3d; color: #e8e4df; align-self: flex-start; border-bottom-left-radius: 4px; }
     .ai-message.error { background: #7f1d1d; color: #fecaca; font-size: 12px; }
     .ai-chat-input { padding: 16px; border-top: 1px solid #444; display: flex; gap: 8px; }
     .ai-chat-input input { flex: 1; padding: 12px 16px; background: #3d3d3d; border: 1px solid #555; border-radius: 24px; color: #faf8f5; outline: none; font-size: 14px; }
-    .ai-chat-input input:focus { border-color: #b8860b; }
+    .ai-chat-input input:focus { border-color: #7c3aed; }
     .ai-chat-input button { width: 44px; height: 44px; border-radius: 50%; background: var(--primary-color, #22c55e); border: none; cursor: pointer; display: flex; align-items: center; justify-content: center; }
     .ai-chat-input button:disabled { background: #555; cursor: not-allowed; }
     .ai-chat-input button svg { width: 20px; height: 20px; fill: white; }
